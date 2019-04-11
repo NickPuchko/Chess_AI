@@ -4,21 +4,24 @@ import numpy as np
 import cv2
 from scipy.ndimage import  filters
 from matplotlib import pyplot as plt
+import os
 
-sigma = 6
-im = np.array(Image.open('//3.jpg').convert('L'))
-im = cv2.resize(im, (1280, 720))
-imx = np.zeros(im.shape)
-filters.gaussian_filter(im, (sigma, sigma), (0, 1), imx)
+for i in range(9):
+  sigma = 6
+  im = np.array(Image.open(os.path.join('//'+str(i+1)+'.jpg')).convert('L'))
+  im = cv2.resize(im, (720, 720))
+  imx = np.zeros(im.shape)
+  filters.gaussian_filter(im, (sigma, sigma), (0, 1), imx)
 
-imy = np.zeros(im.shape)
-filters.gaussian_filter(im, (sigma, sigma), (1, 0), imy)
+  imy = np.zeros(im.shape)
+  filters.gaussian_filter(im, (sigma, sigma), (1, 0), imy)
 
-magn = np.sqrt(imx**2 + imy**2)
-magn = np.uint8(magn)
-im = im/255.0
-plt.figure(figsize=(6,3))
-plt.xticks([])
-plt.yticks([])
-plt.imshow(im, cmap=plt.cm.binary)
-plt.show()
+  magn = np.sqrt(imx**2 + imy**2)
+  magn = np.uint8(magn)
+  im = im/255.0
+  plt.figure(figsize=(10,10))
+  plt.xticks([])
+  plt.yticks([])
+  plt.imshow(im, cmap=plt.cm.binary)
+  plt.show()
+  cv2.imwrite(os.path.join('G'+str(i+1)+'.jpg'), im)
