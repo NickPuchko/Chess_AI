@@ -1,0 +1,41 @@
+from PIL import Image
+from pylab import *
+import numpy as np
+import cv2
+from scipy.ndimage import  filters
+from matplotlib import pyplot as plt
+
+sigma = 6
+im = np.array(Image.open('chess1.jpg').convert('L'))
+im = cv2.resize(im, (1280, 720))
+imx = np.zeros(im.shape)
+filters.gaussian_filter(im, (sigma, sigma), (0, 1), imx)
+
+imy = np.zeros(im.shape)
+filters.gaussian_filter(im, (sigma, sigma), (1, 0), imy)
+
+magn = np.sqrt(imx**2 + imy**2)
+magn = np.uint8(magn)
+im = magn
+gray = im
+corners = cv2.goodFeaturesToTrack(gray, 49, 0.01, 10)
+corners = np.int0(corners)
+a = 0
+xa = np.zeros(49, int)
+ya = np.zeros(49, int)
+for i in corners:
+    x, y = i.ravel()
+    cv2.circle(im, (x, y), 2, 255, -4)
+    print(f'{x} ,  {y}')
+    xa[a] = x
+    ya[a] = y
+    a += 1
+# xa.sort()
+# print(xa)
+# w =int(input())
+# for i in range(49):
+#     if w >= xa[i]:
+#         num = round((xa[i]-376)/100)+2
+# print(f'номер:  {int(num)}')
+cv2.imshow('img', im)
+cv2.waitKey()
