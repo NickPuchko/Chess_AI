@@ -18,10 +18,11 @@ for i in range(9):
 
   magn = np.sqrt(imx**2 + imy**2)
   magn = np.uint8(magn)
-  im = im/255.0
+
   plt.figure(figsize=(10,10))
   plt.xticks([])
   plt.yticks([])
+  cv2.imwrite(os.path.join('G'+str(i+1)+'.jpg'), im)
+  im = im/255.0
   plt.imshow(im, cmap=plt.cm.binary)
   plt.show()
-  cv2.imwrite(os.path.join('G'+str(i+1)+'.jpg'), im)
