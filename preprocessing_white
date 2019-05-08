@@ -1,0 +1,17 @@
+im_test = cv2.imread(r'C:\Users\user\Desktop\image.jpg')
+
+im_test = cv2.resize(im_test, (720, 720))
+hsv = cv2.cvtColor(im_test, cv2.COLOR_BGR2HSV)
+
+lower_black = np.array([10,10,10])
+upper_black = np.array([255,255,255])
+
+mask = cv2.inRange(hsv, lower_black, upper_black)
+im_test = cv2.bitwise_and(im_test,im_test, mask= mask)
+plt.imshow(im_test, cmap = plt.cm.binary)
+plt.show()
+
+cv2.imwrite(r'C:\Users\user\Desktop\image1.jpg', im_test)
+
+im_test.shape
+im_test = np.expand_dims(im_test, axis = 0)
