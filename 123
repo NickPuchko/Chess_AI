@@ -1,0 +1,12 @@
+def process_images(folder_name, class_name):
+    for fn in os.listdir(folder_name + '/' + class_name):
+        if fn == '.DS_Store':
+            continue
+        im = cv2.imread(os.path.join(folder_name + '/' + class_name + '/' + fn))
+        im = cv2.resize(im, (720, 720))
+        im = cv2.Sobel(im,cv2.CV_8UC1,0,1,ksize=5)
+        
+        plt.imshow(thresh, cmap=plt.cm.binary)
+        plt.show()
+        
+        cv2.imwrite(os.path.join(os.path.join(folder_name + '/' + class_name + '/' + fn)), res)
